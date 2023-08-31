@@ -5,7 +5,7 @@ from typing import Dict
 from map_env import MapEnv, Node
 
 
-def dijkstra(env: MapEnv, start: str, goal: str):
+def a_star(env: MapEnv, start: str, goal: str):
   t0 = time.time()
 
   visited: Dict[str, int] = {start: 0}
@@ -31,6 +31,6 @@ def dijkstra(env: MapEnv, start: str, goal: str):
 
       if next_city not in visited.keys() or visited[next_city] > new_cost:
         visited[next_city] = new_cost
-        heapq.heappush(heap, Node(next_city, node.parents + (node.state, node.cost), new_cost))
+        heapq.heappush(heap, Node(next_city, node.parents + (node.state, node.cost), new_cost, env.heuristics_cost(next_city)))
 
     nodes_expanded += 1
